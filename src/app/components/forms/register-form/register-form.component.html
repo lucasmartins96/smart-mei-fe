@@ -1,0 +1,79 @@
+<form class="login-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="field-full-width">
+    <mat-label>Nome</mat-label>
+    <input type="text" matInput formControlName="name" />
+    @if (registerForm.controls.name.hasError('required')) {
+      <mat-error>O Nome é <strong>obrigatório</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="field-full-width">
+    <mat-label>Email</mat-label>
+    <input
+      type="email"
+      matInput
+      formControlName="email"
+      placeholder="Ex. pat@example.com"
+    />
+    @if (
+      registerForm.controls.email.hasError('email') &&
+      registerForm.controls.email.hasError('required')
+    ) {
+      <mat-error>Por favor informe um email válido</mat-error>
+    }
+    @if (registerForm.controls.email.hasError('required')) {
+      <mat-error>O Email é <strong>obrigatório</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="field-full-width">
+    <mat-label>Senha</mat-label>
+    <input
+      matInput
+      [type]="controlHidePasswordFields.password ? 'password' : 'text'"
+      formControlName="password"
+      placeholder="Senha *"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="hideField('password')"
+      [attr.aria-label]="'Hide password'"
+    >
+      <mat-icon>{{
+        controlHidePasswordFields.password ? 'visibility_off' : 'visibility'
+      }}</mat-icon>
+    </button>
+    @if (registerForm.controls.password.hasError('required')) {
+      <mat-error>A senha é <strong>obrigatória</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="field-full-width">
+    <mat-label>Confirme a senha</mat-label>
+    <input
+      matInput
+      [type]="controlHidePasswordFields.confirm ? 'password' : 'text'"
+      formControlName="confirmPassword"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="hideField('confirm')"
+      [attr.aria-label]="'Hide password'"
+    >
+      <mat-icon>{{
+        controlHidePasswordFields.confirm ? 'visibility_off' : 'visibility'
+      }}</mat-icon>
+    </button>
+    @if (registerForm.controls.confirmPassword.hasError('passwordMatchError')) {
+      <mat-error>As senhas não correspondem!</mat-error>
+    }
+  </mat-form-field>
+
+  <button mat-flat-button type="submit" [disabled]="registerForm.invalid">
+    Cadastrar
+  </button>
+</form>

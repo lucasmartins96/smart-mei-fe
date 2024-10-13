@@ -1,0 +1,42 @@
+<form class="login-form" (ngSubmit)="onSubmit()">
+  <mat-form-field class="field-full-width">
+    <mat-label>Email</mat-label>
+    <input
+      type="email"
+      matInput
+      [formControl]="emailFormControl"
+      placeholder="Ex. pat@example.com"
+    />
+    @if (
+      emailFormControl.hasError('email') &&
+      !emailFormControl.hasError('required')
+    ) {
+      <mat-error>Por favor informe um email válido</mat-error>
+    }
+    @if (emailFormControl.hasError('required')) {
+      <mat-error>Email é <strong>obrigatório</strong></mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field class="field-full-width">
+    <mat-label>Senha</mat-label>
+    <input
+      matInput
+      [formControl]="passwordFormControl"
+      [type]="hide() ? 'password' : 'text'"
+    />
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="clickEvent($event)"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide()"
+    >
+      <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+    @if (passwordFormControl.hasError('required')) {
+      <mat-error>A senha é <strong>obrigatória</strong></mat-error>
+    }
+  </mat-form-field>
+  <button mat-flat-button type="submit">Login</button>
+</form>
