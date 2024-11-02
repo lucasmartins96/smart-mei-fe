@@ -1,0 +1,127 @@
+<form
+  class="register-form"
+  [formGroup]="businessPersonFormGroup"
+  (ngSubmit)="onSubmit()"
+>
+  <h4>Dados do Empresário(a)</h4>
+
+  <mat-form-field class="field-full-width">
+    <mat-label>Nome</mat-label>
+    <input type="text" matInput formControlName="name" />
+    @if (businessPersonFormGroup.controls.name.hasError('required')) {
+      <mat-error>O Nome é <strong>obrigatório</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field class="field-full-width">
+    <mat-label>CPF</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="cpf"
+      placeholder="123.456.789-00"
+    />
+    @if (businessPersonFormGroup.controls.cpf.hasError('required')) {
+      <mat-error>O CPF é <strong>obrigatório</strong></mat-error>
+    }
+    @if (businessPersonFormGroup.controls.cpf.hasError('pattern')) {
+      <mat-error
+        >Informe o CPF no formato <strong>123.456.789-00</strong></mat-error
+      >
+    }
+  </mat-form-field>
+
+  <mat-form-field class="field-full-width">
+    <mat-label>Data de Nascimento</mat-label>
+    <input type="date" matInput formControlName="birthday" />
+    @if (businessPersonFormGroup.controls.birthday.hasError('required')) {
+      <mat-error>A Data de Nascimento é <strong>obrigatória</strong></mat-error>
+    }
+  </mat-form-field>
+
+  <div class="address-group" formGroupName="address">
+    <h4>Endereço</h4>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>Rua</mat-label>
+      <input type="text" matInput formControlName="street" />
+      @if (
+        businessPersonFormGroup.controls.address.controls.street.hasError(
+          'required'
+        )
+      ) {
+        <mat-error>O nome da Rua <strong>obrigatório</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>Número</mat-label>
+      <input type="text" matInput formControlName="number" />
+    </mat-form-field>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>Complemento</mat-label>
+      <input type="text" matInput formControlName="complement" />
+    </mat-form-field>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>Bairro</mat-label>
+      <input type="text" matInput formControlName="neighborhood" />
+    </mat-form-field>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>Município</mat-label>
+      <input type="text" matInput formControlName="city" />
+      @if (
+        businessPersonFormGroup.controls.address.controls.city.hasError(
+          'required'
+        )
+      ) {
+        <mat-error>O Município é <strong>obrigatório</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="state">
+        @for (state of brazilianStates; track state.value) {
+          <mat-option value="{{ state.value }}">{{ state.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>CEP</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="zipCode"
+        placeholder="12345-678"
+      />
+      @if (
+        businessPersonFormGroup.controls.address.controls.zipCode.hasError(
+          'required'
+        )
+      ) {
+        <mat-error>O CEP é <strong>obrigatório</strong></mat-error>
+      }
+      @if (
+        businessPersonFormGroup.controls.address.controls.zipCode.hasError(
+          'pattern'
+        )
+      ) {
+        <mat-error
+          >Informe o CEP no formato <strong>12345-678</strong></mat-error
+        >
+      }
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="businessPersonFormGroup.invalid"
+    >
+      Cadastrar
+    </button>
+  </div>
+</form>

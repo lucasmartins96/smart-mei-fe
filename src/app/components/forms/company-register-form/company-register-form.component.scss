@@ -1,0 +1,100 @@
+.register-form {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .row-2-col {
+    display: inline-grid;
+    grid-column-gap: 1rem;
+
+    &.quarter-auto {
+      grid-template-columns: 30% auto;
+    }
+
+    &.auto-quarter {
+      grid-template-columns: auto 30%;
+    }
+  }
+
+  .address-group {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    .row-3-col {
+      display: inline-grid;
+      grid-column-gap: 1rem;
+      
+      &.quarter-auto-quarter {
+        grid-template-columns: 25% auto 25%;
+      }
+
+      &.auto {
+        grid-template-columns: repeat(3, auto);
+      }
+    }
+
+    .row-half {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      grid-column-gap: 1rem;
+    }
+
+    .w-25 {
+      width: 25%;
+    }
+
+    .w-50 {
+      width: 50%;
+    }
+  }
+
+  .table {
+    margin-bottom: 5rem;
+
+    .actions {
+      padding: 1rem;
+
+      .example-button-container + .example-button-container {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  .activities-group {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    .row-2-col {
+      display: inline-grid;
+      grid-column-gap: 1rem;
+  
+      &.quarter-auto {
+        grid-template-columns: 30% auto;
+      }
+  
+      &.auto-quarter {
+        grid-template-columns: auto 30%;
+      }
+    }
+
+    .register-activity-btn-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      
+      .w-50 {
+        width: 50%;
+      }
+    }
+  }
+
+  .register-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    width: 100%;
+  }
+}

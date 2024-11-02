@@ -1,0 +1,320 @@
+<form
+  class="register-form"
+  [formGroup]="companyRegisterFormGroup"
+  (ngSubmit)="onSubmit()"
+>
+  <h4>Dados da Empresa</h4>
+
+  <div class="row-2-col quarter-auto">
+    <mat-form-field class="field-full-width">
+      <mat-label>CNPJ</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="cnpj"
+        placeholder="12.345.678/0001-90"
+      />
+      <mat-hint>12.345.678/0001-90</mat-hint>
+      @if (companyRegisterFormGroup.controls.cnpj.hasError('required')) {
+        <mat-error>O CNPJ é <strong>obrigatório</strong></mat-error>
+      }
+      @if (companyRegisterFormGroup.controls.cnpj.hasError('pattern')) {
+        <mat-error>
+          Informe o CNPJ no formato <strong>12.345.678/0001-90</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="field-full-width">
+      <mat-label>Razão Social</mat-label>
+      <input type="text" matInput formControlName="legalName" />
+      @if (companyRegisterFormGroup.controls.legalName.hasError('required')) {
+        <mat-error>A Razão Social é <strong>obrigatório</strong></mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="row-2-col auto-quarter">
+    <mat-form-field class="field-full-width">
+      <mat-label>Nome Fantasia</mat-label>
+      <input type="text" matInput formControlName="tradeName" />
+      @if (companyRegisterFormGroup.controls.tradeName.hasError('required')) {
+        <mat-error>O Nome Fantasia é <strong>obrigatório</strong></mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" class="field-full-width">
+      <mat-label>Capital Social</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="socialCapital"
+        placeholder="1.000,50"
+      />
+      <span matTextPrefix>R$&nbsp;</span>
+      <mat-hint>1.000,50</mat-hint>
+      @if (
+        companyRegisterFormGroup.controls.socialCapital.hasError('required')
+      ) {
+        <mat-error>O Capital Social é <strong>obrigatório</strong></mat-error>
+      }
+      @if (
+        companyRegisterFormGroup.controls.socialCapital.hasError('pattern')
+      ) {
+        <mat-error>
+          Informe o Capital Social no formato <strong>1.000,50</strong>
+        </mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <mat-checkbox formControlName="isTransportAutonomous">
+    MEI Caminhoneiro
+  </mat-checkbox>
+
+  <div class="address-group" formGroupName="address">
+    <h4>Endereço</h4>
+
+    <div class="row-3-col quarter-auto-quarter">
+      <mat-form-field class="field-full-width">
+        <mat-label>CEP</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="zipCode"
+          placeholder="12345-678"
+          maxlength="9"
+        />
+        <mat-hint>12345-678</mat-hint>
+        @if (
+          companyRegisterFormGroup.controls.address.controls.zipCode.hasError(
+            'required'
+          )
+        ) {
+          <mat-error>O CEP é <strong>obrigatório</strong></mat-error>
+        }
+        @if (
+          companyRegisterFormGroup.controls.address.controls.zipCode.hasError(
+            'pattern'
+          )
+        ) {
+          <mat-error
+            >Informe o CEP no formato <strong>12345-678</strong></mat-error
+          >
+        }
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-label>Rua</mat-label>
+        <input type="text" matInput formControlName="street" />
+        @if (
+          companyRegisterFormGroup.controls.address.controls.street.hasError(
+            'required'
+          )
+        ) {
+          <mat-error>O nome da Rua <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-label>Número</mat-label>
+        <input type="text" matInput formControlName="number" />
+      </mat-form-field>
+    </div>
+
+    <div class="row-3-col auto">
+      <mat-form-field class="field-full-width">
+        <mat-label>Complemento</mat-label>
+        <input type="text" matInput formControlName="complement" />
+      </mat-form-field>
+      <mat-form-field class="field-full-width">
+        <mat-label>Bairro</mat-label>
+        <input type="text" matInput formControlName="neighborhood" />
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-label>Município</mat-label>
+        <input type="text" matInput formControlName="city" />
+        @if (
+          companyRegisterFormGroup.controls.address.controls.city.hasError(
+            'required'
+          )
+        ) {
+          <mat-error>O Município é <strong>obrigatório</strong></mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="row-half"></div>
+
+    <div class="w-25">
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="state">
+          @for (state of brazilianStates; track state.value) {
+            <mat-option value="{{ state.value }}">{{ state.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="activities">
+    <h4>Atividade</h4>
+
+    <table
+      mat-table
+      [dataSource]="companyActivitiesTableDataSource"
+      class="mat-elevation-z8 demo-table table"
+    >
+      <!-- CNAE Column -->
+      <ng-container matColumnDef="cnae">
+        <th mat-header-cell *matHeaderCellDef>CNAE</th>
+        <td mat-cell *matCellDef="let element">{{ element.cnae }}</td>
+      </ng-container>
+
+      <!-- Activity Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nome da Atividade</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Occupation Column -->
+      <ng-container matColumnDef="occupation">
+        <th mat-header-cell *matHeaderCellDef>Ocupação</th>
+        <td mat-cell *matCellDef="let element">{{ element.occupation }}</td>
+      </ng-container>
+
+      <!-- isPrimary Column -->
+      <ng-container matColumnDef="isPrimary">
+        <th mat-header-cell *matHeaderCellDef>Atividade Principal</th>
+        <td mat-cell *matCellDef="let element">
+          @if (element.isPrimary) {
+            <mat-icon
+              aria-hidden="false"
+              aria-label="check icon"
+              fontIcon="check"
+            ></mat-icon>
+          } @else {
+            <mat-icon
+              aria-hidden="false"
+              aria-label="close icon"
+              fontIcon="close"
+            ></mat-icon>
+          }
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element" class="actions">
+          <div class="example-button-container">
+            <button
+              mat-mini-fab
+              type="button"
+              aria-label="Example icon button with a delete icon"
+              (click)="deleteOneActivity(element)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div class="example-button-container">
+            <button
+              mat-mini-fab
+              type="button"
+              aria-label="Example icon button with a edit icon"
+              (click)="handleUpdateActivity(element.index)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns">
+        &nbsp;
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <div class="activities-group" [formGroup]="activityFormGroup">
+      <div class="row-2-col quarter-auto">
+        <mat-form-field class="field-full-width">
+          <mat-label>CNAE</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="cnae"
+            placeholder="9602-5/01"
+            maxlength="9"
+          />
+          <mat-hint>Nesse padrão: <strong>0000-0/00</strong> </mat-hint>
+          @if (activityFormGroup.controls.cnae.hasError('required')) {
+            <mat-error> O CNAE é <strong>obrigatório</strong> </mat-error>
+          }
+          @if (activityFormGroup.controls.cnae.hasError('pattern')) {
+            <mat-error> Informe o CNAE no padrão</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <mat-label>Nome da Atividade</mat-label>
+          <input type="text" matInput formControlName="name" />
+          @if (activityFormGroup.controls.name.hasError('required')) {
+            <mat-error>
+              O Nome da Atividade é <strong>obrigatório</strong>
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="row-2-col auto-quarter">
+        <mat-form-field class="field-full-width">
+          <mat-label>Ocupação</mat-label>
+          <input type="text" matInput formControlName="occupation" />
+          @if (activityFormGroup.controls.occupation.hasError('required')) {
+            <mat-error>A Ocupação é <strong>obrigatória</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isPrimary">
+          Atividade Principal
+        </mat-checkbox>
+      </div>
+
+      <div class="register-activity-btn-wrapper">
+        <button
+          mat-flat-button
+          class="w-50"
+          type="button"
+          [disabled]="activityFormGroup.invalid"
+          (click)="handleActivityFormButtonActions()"
+        >
+          {{ activitiesButtonLabel }}
+        </button>
+
+        @if (isEditionMode) {
+          <button
+            mat-flat-button
+            class="w-50"
+            type="button"
+            (click)="handleClickCancelChanges()"
+          >
+            Cancelar alterações da atividade
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="register-btn-wrapper">
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="companyRegisterFormGroup.invalid"
+    >
+      Cadastrar
+    </button>
+  </div>
+</form>

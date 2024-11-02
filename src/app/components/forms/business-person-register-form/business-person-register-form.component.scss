@@ -1,0 +1,11 @@
+.register-form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  .address-group {
+    display: flex;
+    flex-direction: column;
+  }
+}
