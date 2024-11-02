@@ -14,6 +14,7 @@ import { RegisterService } from './register.service';
 import { MatDialog } from '@angular/material/dialog';
 import { matchPassword } from '../../../../utils/match-password-validator';
 import { DialogDefaultComponent } from '../../index';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-form',
@@ -23,7 +24,6 @@ import { DialogDefaultComponent } from '../../index';
   imports: [
     FormsModule,
     MatFormFieldModule,
-    MatInputModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
@@ -49,7 +49,10 @@ export class RegisterFormComponent {
     confirm: true,
   };
 
-  constructor(private registerService: RegisterService) {}
+  constructor(
+    private registerService: RegisterService,
+    private router: Router,
+  ) {}
 
   hideField(field: keyof typeof this.controlHidePasswordFields) {
     this.controlHidePasswordFields[field] =
@@ -62,8 +65,9 @@ export class RegisterFormComponent {
     const password = this.registerForm.controls.password.value!;
 
     this.registerService.register({ name, email, password }).subscribe({
-      next(value) {
-        console.log(value);
+      next: (response) => {
+        sessionStorage.setItem('token', response.body!.token);
+        this.router.navigateByUrl('/welcome');
       },
       error: (err) => {
         const message = err?.error?.errors?.[0]?.message;
