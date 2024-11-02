@@ -10,10 +10,11 @@ export class RegisterService {
   constructor(private http: HttpClient) {}
 
   register(body: { name: string; email: string; password: string }) {
-    return this.http.post(
-      this.url,
-      { ...body, role: 'user' },
-      { observe: 'response' as const },
-    );
+    return this.http.post<{
+      id: number;
+      name: string;
+      email: string;
+      token: string;
+    }>(this.url, { ...body, role: 'user' }, { observe: 'response' as const });
   }
 }
