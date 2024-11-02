@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+interface AddBody {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,7 +14,12 @@ export class LoginService {
 
   constructor(private http: HttpClient) {}
 
-  login(body: { email: string; password: string }) {
-    return this.http.post(this.url, body, { observe: 'response' as const });
+  login(body: AddBody) {
+    return this.http.post<{
+      id: number;
+      name: string;
+      email: string;
+      token: string;
+    }>(this.url, body, { observe: 'response' as const });
   }
 }
