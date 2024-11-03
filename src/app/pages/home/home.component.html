@@ -1,1 +1,51 @@
-<p>home works!</p>
+<div class="wrapper">
+  <mat-sidenav-container class="custom-sidenav-container">
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      opened
+      class="custom-sidenav"
+      [fixedInViewport]="true"
+      [fixedTopGap]="0"
+    >
+      <div class="profile">
+        <div class="pic">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            fontIcon="account_circle"
+            class="icon-display"
+          ></mat-icon>
+        </div>
+        <div class="user-info">
+          <p class="name">Lucas Martins</p>
+          <p class="email">lucasmartins.dsilva&#64;gmail.com</p>
+        </div>
+      </div>
+      <mat-divider class="custom-divider"></mat-divider>
+      <mat-nav-list>
+        @for (link of linkList; track link) {
+          <a
+            mat-list-item
+            class="link-item"
+            routerLink="{{ link.routerLink }}"
+            routerLinkActive="active-link"
+            ariaCurrentWhenActive="page"
+          >
+            {{ link.label }}
+          </a>
+        }
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="custom-sidenav-content">
+      <header>
+        <span class="user-info">
+          <p class="greetings">Olá, Lucas</p>
+          <p class="date">Segunda-feira, 32 de Novembro de 2024</p>
+        </span>
+        <mat-divider class="custom-divider"></mat-divider>
+      </header>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

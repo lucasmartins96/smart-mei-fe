@@ -1,0 +1,64 @@
+.wrapper {
+  .custom-sidenav {
+    background-color: #d7e3ff;
+    border-radius: 0;
+    padding: 1.6rem 2rem 0 2rem;
+    width: 20rem;
+
+    .profile {
+      height: 4.7rem;
+      display: flex;
+
+      .pic {
+        margin-right: 4px;
+
+        .icon-display {
+          width: 48px;
+          height: 48px;
+          font-size: 48px;
+        }
+      }
+
+
+      .user-info {
+        .name {
+          font-weight: 500;
+        }
+
+        .email {
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .active-link {
+      font-weight: 500;
+      background-color: #b3c9ff;
+    }
+
+    .link-item {
+      border-radius: 10px;
+    }
+    
+  }
+
+  .custom-sidenav-content {
+    background-color: white;
+
+    header {
+      padding-top: 1.6rem;
+      margin-bottom: 1.6rem;
+
+      .user-info {
+        .greetings {
+          font-size: 1.2rem;
+          font-weight: 500;
+        }
+  
+        .date {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
