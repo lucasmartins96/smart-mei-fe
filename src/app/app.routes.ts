@@ -3,7 +3,10 @@ import {
   AuthComponent,
   BusinessPersonRegisterComponent,
   CompanyRegisterComponent,
+  DashboardComponent,
   HomeComponent,
+  ReportsComponent,
+  TransactionsComponent,
   WelcomeComponent,
 } from './pages/index';
 
@@ -21,6 +24,25 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'transactions',
+        component: TransactionsComponent,
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent,
+      },
+    ],
   },
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
 ];
